@@ -69,7 +69,7 @@ class ProductController
                 echo json_encode($this->gateway->getAll());
                 break;
             case "POST":
-                $data = (array) json_decode(file_get_contents("php://input"), true);
+                $data = count($_POST) > 0 ? $_POST : (array) json_decode(file_get_contents("php://input"), true);
 
                 $errors = $this->getValidationErrors($data, false);
 

@@ -23,7 +23,15 @@ if ($parts[2] != "products"){
     exit;
 }
 
-$id = $_POST['id'] ?? $parts[3] ?? null;
+$id = null;
+
+$data = count($_POST) > 0 ? $_POST : (array) json_decode(file_get_contents("php://input"), true);
+
+if (isset($data["id"]) && $data["id"] !== "") {
+    $id = $data["id"];
+} else if (isset($parts[3]) && $parts[3] !== "") {
+    $id = $parts[3];
+};
 
 $database = new Database("localhost", "product_db", "root", "");
 
@@ -32,7 +40,7 @@ $gateway = new ProductGateway($database);
 $controller = new ProductController($gateway);
 
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['_method'])) {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && (isset($_POST['_method']) && !is_null($id))) {
     $controller->processRequest($_POST['_method'], $id);
 } else {
     $controller->processRequest($_SERVER["REQUEST_METHOD"], $id);

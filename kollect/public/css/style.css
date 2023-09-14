@@ -1,0 +1,16 @@
+.accordion-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: end;
+    width: 100%;
+}
+
+main {
+    margin-top: 50px;
+}
+
+#collectibles-list h1 {
+    margin-bottom: 25px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.05);
+}
